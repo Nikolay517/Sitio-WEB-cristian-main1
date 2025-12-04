@@ -1,6 +1,7 @@
 
 from pathlib import Path
 import os 
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,7 +16,7 @@ SECRET_KEY = 'django-insecure-6%f=4lmik@ue=setjd_q2(ca8=az55%p6rf&4a750x8i&iqts0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -64,10 +65,11 @@ WSGI_APPLICATION = 'sitioweb.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL')
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    )
 }
 
 
@@ -135,3 +137,4 @@ AUTHENTICATION_BACKENDS = [
     'core.backends.EmailBackend',                # 1. Primero intenta nuestro método (Email/Usuario)
     'django.contrib.auth.backends.ModelBackend', # 2. Respaldo por defecto
 ]
+
